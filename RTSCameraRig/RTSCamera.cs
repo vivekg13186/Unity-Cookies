@@ -14,7 +14,7 @@ public class BuilderCamera : MonoBehaviour
     public float normalSpeed;
     public float fastSpeed;
     public float movementSpeed=1;
-    public float movementTime=1;
+    public float movementTime=1;//15 for sharp movement ,1 for fluid movement
     public float rotationAmount=1;
     public Vector3 zoomAmount;
     public Vector3 newPosition;
@@ -24,7 +24,7 @@ public class BuilderCamera : MonoBehaviour
     public Vector3 dragCurrrentPosition; 
     public Vector3 rotateStartPosition;
     public Vector3 rotateCurrentPosition;
-    // Start is called before the first frame update
+    
     void Start()
     {
         newPosition = transform.position;
@@ -32,7 +32,7 @@ public class BuilderCamera : MonoBehaviour
         newZoom = cameraTransform.localPosition;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (followTransform != null)
@@ -98,12 +98,10 @@ public class BuilderCamera : MonoBehaviour
             newZoom += Input.mouseScrollDelta.y * zoomAmount;
         }
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Modud");
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float entry;
-            if (plane.Raycast(ray, out entry)) {
-                Debug.Log("Plane ray cast");
+            if (plane.Raycast(ray, out entry)) { 
                 dragStartPosition = ray.GetPoint(entry);
             }
         }
@@ -114,14 +112,13 @@ public class BuilderCamera : MonoBehaviour
             float entry;
             if (plane.Raycast(ray, out entry))
             {
-
-                Debug.Log("Plane ray cast");
+                 
                 dragCurrrentPosition = ray.GetPoint(entry);
                 newPosition = transform.position + dragStartPosition-dragCurrrentPosition;
             }
         }
         if (Input.GetMouseButtonDown(2)) {
-            Debug.Log("Midddle Button pressed");
+            
             rotateStartPosition = Input.mousePosition;
         }
         if (Input.GetMouseButton(2))
